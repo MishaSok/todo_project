@@ -1,12 +1,14 @@
 import { View, TextInput, StyleSheet, Text, Alert, Button, TouchableOpacity } from 'react-native'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
-function AuthPage() {
+function LoginPage() {
+  const navigation = useNavigation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Login Page</Text>
       <View>
         <TextInput
@@ -26,8 +28,8 @@ function AuthPage() {
           onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.forgot_button}>No account yet?</Text>
       </TouchableOpacity>
       <Button
         title="Login"
@@ -37,6 +39,12 @@ function AuthPage() {
   )
 }
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
   input: {
     width: 200,
     height: 40,
@@ -57,4 +65,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AuthPage
+export default LoginPage

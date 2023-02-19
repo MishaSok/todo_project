@@ -1,22 +1,6 @@
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, View } from 'react-native'
-import Header from './components/Header/Header'
-import TasksPage from './pages/TasksPage/TasksPage'
+import React from 'react'
+import Navigation from './components/Navigation/Navigation'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Header />
-      <TasksPage />
-    </View>
-  )
+  return <Navigation />
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
-})

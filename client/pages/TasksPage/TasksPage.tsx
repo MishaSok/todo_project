@@ -6,7 +6,6 @@ import { AntDesign } from '@expo/vector-icons'
 import Input from '../../components/Input/Input'
 
 function TasksPage() {
-  console.log('hui')
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>

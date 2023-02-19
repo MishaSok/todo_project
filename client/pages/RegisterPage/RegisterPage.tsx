@@ -1,13 +1,48 @@
 import { View, Button, TextInput, StyleSheet, Alert, Text } from 'react-native'
 import { useState } from 'react'
+import axios from 'axios'
 
 function RegisterPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
+  const [refresh, setRefresh] = useState('')
+  const [access, setAccess] = useState('')
+  const validation = () => {
+    if (password === confPassword) {
+      return true
+    }
+    return false
+  }
+  const handleRegister = async () => {
+    let status = ''
+    if (validation()) {
+      await axios
+        .post('http://192.168.0.103:8000/api/register_user', {
+          email: email,
+          password: password,
+        })
+        .then((res) => (status = res.data.status))
+      if (status === 'success') {
+        await axios
+          .post('http://192.168.0.103:8000/api/token', {
+            email: email,
+            password: password,
+          })
+          .then((res) => {
+            setRefresh(res.data.refresh)
+            setAccess(res.data.access)
+          })
+      } else {
+        console.log('бэкенд хуйня ебаная')
+      }
+    } else {
+      console.log('pizda')
+    }
+  }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Register Page</Text>
       <View>
         <TextInput
@@ -39,12 +74,18 @@ function RegisterPage() {
       </View>
       <Button
         title="Register"
-        onPress={() => Alert.alert('хуй')}
+        onPress={handleRegister}
       />
     </View>
   )
 }
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
   input: {
     width: 200,
     height: 40,
