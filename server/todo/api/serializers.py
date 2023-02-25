@@ -14,3 +14,10 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         email = serializers.EmailField(required=True)
         password = serializers.CharField(required=True)
         return CustomUser.objects.create(**validated_data)
+
+
+class LoginUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'password')
+
