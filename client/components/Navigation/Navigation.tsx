@@ -12,26 +12,23 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {isLoggedIn ? (
+      <Stack.Navigator initialRouteName="Login">
+        <>
           <Stack.Screen
             name={'TasksPage'}
             component={TasksPage}
           />
-        ) : (
-          <>
-            <Stack.Screen
-              name={'Login'}
-              component={LoginPage}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name={'Register'}
-              component={RegisterPage}
-              options={{ headerShown: false }}
-            />
-          </>
-        )}
+          <Stack.Screen
+            name={'Login'}
+            component={LoginPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name={'Register'}
+            component={RegisterPage}
+            options={{ headerShown: false }}
+          />
+        </>
       </Stack.Navigator>
     </NavigationContainer>
   )

@@ -1,18 +1,41 @@
-import {View, Button, TextInput, StyleSheet, Text, StatusBar} from 'react-native'
-import { useState } from 'react'
+import { View, Button, TextInput, StyleSheet, Text, StatusBar } from 'react-native'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 function RegisterPage() {
+  const navigation = useNavigation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
   const [refresh, setRefresh] = useState('')
   const [access, setAccess] = useState('')
+
   const validation = () => {
     if (password === confPassword) {
       return true
     }
     return false
+  }
+
+  const storeData = async (key: string, value: string) => {
+    try {
+      await AsyncStorage.setItem(key, value)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const getData = async (key: string) => {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      console.log(value)
+      if (value !== null) {
+        console.log(value)
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
   const handleRegister = async () => {
     let status = ''
@@ -29,9 +52,10 @@ function RegisterPage() {
             email: email,
             password: password,
           })
-          .then((res) => {
+          .then(async (res) => {
             setRefresh(res.data.refresh)
             setAccess(res.data.access)
+            navigation.navigate('Login')
           })
       } else {
         console.log('бэкенд хуйня ебаная')
@@ -40,6 +64,12 @@ function RegisterPage() {
       console.log('pizda')
     }
   }
+  useEffect(() => {
+    if (access && refresh) {
+      storeData('access', access)
+      storeData('refresh', refresh)
+    }
+  }, [access, refresh])
 
   return (
     <View style={styles.container}>

@@ -1,15 +1,51 @@
-import { View, TextInput, StyleSheet, Text, Alert, Button, TouchableOpacity } from 'react-native'
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  Button,
+  TouchableOpacity,
+  Keyboard,
+  Alert,
+} from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import axios from 'axios/index'
 
 function LoginPage() {
   const navigation = useNavigation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const handleLogin = async () => {
+    let status = ''
+    let message = ''
+    await axios
+      .post('http://192.168.0.103:8000/api/login', {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        status = res.data.status
+        message = res.data.message
+      })
+
+    switch (status) {
+      case 'success':
+        navigation.navigate('TasksPage')
+      case 'failure':
+        Alert.alert(message)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Page</Text>
+      <Text
+        style={styles.title}
+        onPress={() => Keyboard.dismiss()}
+      >
+        Login Page
+      </Text>
       <View>
         <TextInput
           placeholder="Email"
@@ -33,7 +69,7 @@ function LoginPage() {
       </TouchableOpacity>
       <Button
         title="Login"
-        onPress={() => Alert.alert('хуй')}
+        onPress={handleLogin}
       />
     </View>
   )
