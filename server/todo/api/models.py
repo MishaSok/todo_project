@@ -18,3 +18,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+
+class Tasks(models.Model):
+    email = models.CharField(unique=False, max_length=150)
+    folder_name = models.CharField(unique=False, max_length=30)
+    task_text = models.CharField(unique=False, max_length=100, default='None')
+    created_time = models.DateTimeField(default=timezone.now)
+    time_today = models.DateTimeField()
+    time_all = models.DateTimeField()
+
+    def __str__(self):
+        return f'User: {self.email} Task_folder: {self.folder_name} Task_text:{self.task_text}'

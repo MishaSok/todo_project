@@ -5,7 +5,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .models import CustomUser
+from .models import CustomUser, Tasks
 from .serializers import CustomUserSerializer
 from rest_framework import authentication, permissions
 from rest_framework.views import APIView
@@ -72,3 +72,15 @@ class LoginUserAPIView(APIView):
         else:
             return Response({'message': 'Wrong password',
                              'status': 'failure'})
+
+
+class CreateFolderView(APIView):
+    def post(self, request):
+        # check request for correct data
+        if 'email' not in request.data and 'folder_name' not in request.data:
+            return Response({'message': 'Not all fields are filled',
+                             'status': 'failure'})
+
+        # create new folder
+        
+        pass
