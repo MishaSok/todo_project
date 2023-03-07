@@ -4,6 +4,7 @@ import { SimpleLineIcons } from '@expo/vector-icons'
 import { Feather } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import Input from '../../components/Input/Input'
+import SideBar from '../../components/SideBar/SideBar'
 
 function TasksPage() {
   return (
@@ -39,6 +40,7 @@ function TasksPage() {
         />
         <Input />
       </View>
+      <SideBar />
     </View>
   )
 }
