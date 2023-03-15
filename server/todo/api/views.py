@@ -46,9 +46,22 @@ class RegisterUserAPIView(APIView):
 
             user = CustomUser.objects.create_user(email=request.data['email'], password=request.data['password'],
                                                   last_login=aware_datetime)
-
+            self.default_folders(email=request.data['email'])
             return Response({'message': f'New user {user.email}',
                              'status': 'success'})
+
+    @staticmethod
+    def default_folders(email):
+        try:
+            archive_default_folder = Tasks(email=email, folder_name='Archive',
+                                           task_text='Your archive task <3')
+            main_tasks_default_folder = Tasks(email=email, folder_name='Main Tasks',
+                                              task_text='Your main task <3')
+            archive_default_folder.save()
+            main_tasks_default_folder.save()
+        except Exception as Error:
+            return Response({'message': 'An unexpected error has occurred. Try again',
+                             'status': 'failure'})
 
 
 class LoginUserAPIView(APIView):
@@ -92,10 +105,6 @@ class CreateFolderView(APIView):
                              'status': 'failure'})
 
 
-# data = {
-# email: '',
-# task_name: ''
-# }
 class RemoveFolderView(APIView):
     def post(self, request):
         if 'email' not in request.data or 'folder_name' not in request.data:
