@@ -1,0 +1,15 @@
+@mixin typography($fs: 16px, $fw: 400, $lh: 24px) {
+  font-weight: $fw;
+  font-size: $fs;
+  line-height: $lh;
+}
+
+@mixin title-h1-medium {
+  @include typography(24px, 500, 36px);
+}
+@mixin title-h2-medium {
+  @include typography(16px, 500, 24px);
+}
+@mixin text-regular {
+  @include typography(16px, 400, 24px);
+}

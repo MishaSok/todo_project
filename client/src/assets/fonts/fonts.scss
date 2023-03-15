@@ -1,0 +1,13 @@
+@mixin font-face($font-family, $url, $weight) {
+  @font-face {
+    font-family: '#{$font-family}';
+    src: url('../fonts/#{$url}.ttf') format('truetype');
+    font-weight: #{$weight};
+    font-display: swap;
+    font-style: normal;
+  }
+}
+
+@include font-face('Gilroy', 'GilroyRegular', 400);
+@include font-face('Gilroy', 'GilroyMedium', 500);
+@include font-face('Kantumruy', 'KantumruyRegular', 400);
