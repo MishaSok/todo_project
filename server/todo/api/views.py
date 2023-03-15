@@ -74,10 +74,6 @@ class LoginUserAPIView(APIView):
                              'status': 'failure'})
 
 
-# data = {
-# email: '',
-# task_name: ''
-# }
 class CreateFolderView(APIView):
     def post(self, request):
         # check request for correct data
@@ -92,5 +88,24 @@ class CreateFolderView(APIView):
                              'status': 'success'})
         except Exception as FolderError:
             print(FolderError)
+            return Response({'message': 'An unexpected error has occurred. Try again',
+                             'status': 'failure'})
+
+
+# data = {
+# email: '',
+# task_name: ''
+# }
+class RemoveFolderView(APIView):
+    def post(self, request):
+        if 'email' not in request.data or 'folder_name' not in request.data:
+            return Response({'message': 'Not all fields are filled',
+                             'status': 'failure'})
+        try:
+            tasks = Tasks.objects.filter(email=request.data['email'],
+                                         folder_name=request.data['folder_name']).delete()
+            return Response({'message': 'Folder deleted successfully'})
+        except Exception as FolderRemoveError:
+            print(FolderRemoveError)
             return Response({'message': 'An unexpected error has occurred. Try again',
                              'status': 'failure'})
