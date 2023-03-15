@@ -74,13 +74,23 @@ class LoginUserAPIView(APIView):
                              'status': 'failure'})
 
 
+# data = {
+# email: '',
+# task_name: ''
+# }
 class CreateFolderView(APIView):
     def post(self, request):
         # check request for correct data
-        if 'email' not in request.data and 'folder_name' not in request.data:
+        if 'email' not in request.data or 'folder_name' not in request.data:
             return Response({'message': 'Not all fields are filled',
                              'status': 'failure'})
-
-        # create new folder
-        
-        pass
+        try:
+            folder = Tasks(email=request.data['email'], folder_name=request.data['folder_name'],
+                           task_text='First task')
+            folder.save()
+            return Response({'message': 'Successfully',
+                             'status': 'success'})
+        except Exception as FolderError:
+            print(FolderError)
+            return Response({'message': 'An unexpected error has occurred. Try again',
+                             'status': 'failure'})

@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -24,8 +26,8 @@ class Tasks(models.Model):
     folder_name = models.CharField(unique=False, max_length=30)
     task_text = models.CharField(unique=False, max_length=100, default='None')
     created_time = models.DateTimeField(default=timezone.now)
-    time_today = models.DateTimeField()
-    time_all = models.DateTimeField()
+    time_today = models.DateTimeField(default=datetime.datetime(2000, 1, 1))
+    time_all = models.DateTimeField(default=datetime.datetime(2000, 1, 1))
 
     def __str__(self):
         return f'User: {self.email} Task_folder: {self.folder_name} Task_text:{self.task_text}'
