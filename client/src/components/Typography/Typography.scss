@@ -1,0 +1,22 @@
+@import "./src/assets/styles/main.scss";
+
+.typography {
+  transform: translateY(1px);
+
+  &-text-regular {
+    font-family: 'Gilroy', sans-serif;
+    @include text-regular;
+  }
+  &-time-regular {
+    font-family: 'Kantumruy', sans-serif;
+    @include text-regular;
+  }
+  &-title-h1-medium {
+    font-family: 'Gilroy', sans-serif;
+    @include title-h1-medium;
+  }
+  &-title-h2-medium {
+    font-family: 'Gilroy', sans-serif;
+    @include title-h2-medium;
+  }
+}
