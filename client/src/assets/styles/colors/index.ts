@@ -1,15 +1,15 @@
 import colors from './export.scss'
 
 export default {
-  primary: colors.primary,
-  primary_focus: colors.primary_focus,
-  secondary: colors.secondary,
-  error: colors.error,
-  success: colors.success,
-  gray_0: colors.gray_0,
-  gray_20: colors.gray_20,
-  gray_40: colors.gray_40,
-  gray_60: colors.gray_60,
-  gray_80: colors.gray_80,
-  gray_100: colors.gray_100,
+  primary: colors['primary-color'],
+  primary_focus: colors['primary-focus-color'],
+  secondary: colors['secondary-color'],
+  error: colors['error-color'],
+  success: colors['success-color'],
+  gray_0: colors['gray-color-0'],
+  gray_20: colors['gray-color-20'],
+  gray_40: colors['gray-color-40'],
+  gray_60: colors['gray-color-60'],
+  gray_80: colors['gray-color-80'],
+  gray_100: colors['gray-color-100'],
 }

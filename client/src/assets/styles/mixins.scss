@@ -1,3 +1,22 @@
+@import "./button.scss";
+@import "./typography.scss";
+
+@mixin width($width) {
+  width: $width;
+  max-width: $width;
+  min-width: $width;
+}
+
+@mixin height($height) {
+  height: $height;
+  max-height: $height;
+  min-height: $height;
+}
+
+@mixin gap($gap) {
+  gap: $gap;
+}
+
 @mixin border($border-style: none, $border-color: transparent, $border-radius: 0, $border-widths: none) {
   border-style: $border-style;
   border-color: $border-color;
@@ -18,15 +37,4 @@
   @if $gap != 0 {
     gap: $gap;
   }
-}
-@mixin width($width) {
-  width: $width;
-  max-width: $width;
-  min-width: $width;
-}
-
-@mixin height($height) {
-  height: $height;
-  max-height: $height;
-  min-height: $height;
 }

@@ -1,0 +1,62 @@
+@import "./src/assets/styles/main";
+
+.button {
+  $parent: &;
+  @include flexible(center, center, $gap: 12px);
+
+  // Button Types
+  &-primary {
+    @include button(100%, $primary-color);
+
+    #{$parent}__text {
+      color: $gray-color-0;
+    }
+  }
+
+  &-secondary {
+    @include button(100%, transparent);
+
+    #{$parent}__text {
+      color: $primary-color;
+    }
+  }
+
+  // Button States
+  &-primary:hover{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: box-shadow .4s ease-out;
+  }
+
+  &-secondary:hover {
+    background-color: $secondary-color;
+    transition: background-color .4s ease-out;
+  }
+
+  &-primary:active {
+    background-color: $primary-focus-color;
+    transition: background-color .4s ease-out;
+  }
+
+  &-secondary:active {
+    background-color: $primary-focus-color;
+    transition: background-color .4s ease-out;
+
+    #{$parent}__text {
+      color: $gray-color-0;
+    }
+  }
+
+  &-primary-disable {
+    background-color: $gray-color-40;
+
+    #{$parent}__text {
+      color: $gray-color-80;
+    }
+  }
+
+  &-secondary-disable {
+    #{$parent}__text {
+      color: $gray-color-80;
+    }
+  }
+}

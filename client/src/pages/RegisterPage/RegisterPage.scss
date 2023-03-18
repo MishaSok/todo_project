@@ -1,0 +1,27 @@
+@import "../../assets/styles/main";
+
+.register-page {
+  @include flexible($fd: column, $ai: center);
+  &__title {
+    font-size: 20px;
+  }
+  &__button {
+    width: 100%;
+    border-radius: 30px;
+  }
+  &__wrapper {
+    @include flexible($fd: column, $ai: center);
+
+  }
+  &__form{
+    margin-top: 50px;
+    @include flexible($fd: column, $ai: center, $gap: 35px);
+    input {
+      padding: 5px 31px;
+      border: 1px solid #AEAEAE;
+      border-radius: 20px;
+      background-color: $gray-color-20;
+    ;
+    }
+  }
+}
