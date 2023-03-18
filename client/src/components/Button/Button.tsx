@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import ButtonProps from './Button.types'
 import './Button.scss'
 
-function Button({ className, icon, children, type, onClick }: ButtonProps) {
-  const ButtonClassName = classNames('button', `button-${type}`, className)
+function Button({ className, icon, children, variant, type, onClick }: ButtonProps) {
+  const ButtonClassName = classNames('button', `button-${variant}`, className)
 
   const content =
     typeof children === 'string' ? (
@@ -21,9 +21,9 @@ function Button({ className, icon, children, type, onClick }: ButtonProps) {
 
   return (
     <button
-      type="button"
       className={ButtonClassName}
       onClick={onClick}
+      type={type}
     >
       {icon}
 

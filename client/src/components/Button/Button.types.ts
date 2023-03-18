@@ -13,8 +13,8 @@ type ButtonState =
 interface ButtonProps {
   className?: string
   children: React.ReactNode
-
-  type?: ButtonTypes
+  type?: 'submit' | 'reset' | 'button' | undefined
+  variant?: ButtonTypes
 
   state?: ButtonState
   icon?: React.ReactNode

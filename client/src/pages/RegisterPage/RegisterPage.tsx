@@ -1,9 +1,22 @@
 import React from 'react'
 import Typography from '../../components/Typography'
 import Button from '../../components/Button'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import './RegisterPage.scss'
 
+interface IRegisterFields {
+  email: string
+  password: string
+  confirm_password: string
+}
 function RegisterPage() {
+  const { register, handleSubmit } = useForm<IRegisterFields>()
+
+  const onSubmit: SubmitHandler<IRegisterFields> = (data, e) => {
+    console.log(data, e)
+  }
+
   return (
     <div className="register-page">
       <div className="register-page__wrapper">
@@ -14,27 +27,45 @@ function RegisterPage() {
           Register
         </Typography>
 
-        <form className="register-page__form">
+        <form
+          className="register-page__form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <input
             placeholder="email"
             type="text"
+            {...(register('email'),
+            {
+              required: true,
+            })}
           />
           <input
             placeholder="password"
             type="text"
+            {...(register('password'),
+            {
+              required: true,
+            })}
           />
           <input
             placeholder="confirm password"
             type="text"
+            {...(register('confirm_password'),
+            {
+              required: true,
+            })}
           />
           <Button
             className="register-page__button"
-            type="primary"
+            variant="primary"
+            type="submit"
           >
-            Button
+            Submit
           </Button>
         </form>
-        <Typography>Already have an account?</Typography>
+        <Link to="/login">
+          <Typography className="register-page__subtitle">Already have an account?</Typography>
+        </Link>
       </div>
     </div>
   )

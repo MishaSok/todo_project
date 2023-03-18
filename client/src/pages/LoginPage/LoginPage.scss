@@ -1,7 +1,8 @@
 @import "../../assets/styles/main";
 
 .login-page {
-  @include flexible($fd: column, $ai: center);
+  min-height: 100vh;
+  @include flexible($fd: column, $ai: center, $jc: center);
   &__title {
     font-size: 20px;
   }
@@ -11,6 +12,9 @@
   }
   &__wrapper {
     @include flexible($fd: column, $ai: center);
+    padding: 50px;
+    border: 1px solid #AEAEAE;
+    border-radius: 20px;
 
   }
   &__form{

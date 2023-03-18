@@ -1,0 +1,32 @@
+@import "../../assets/styles/main";
+
+.header {
+  @include flexible($fd: row, $ai: center, $jc: space-between);
+  padding: 8px 25px 10px 20px;
+  border-bottom: 1px solid $gray-color-40;
+
+  &__logo {
+    @include flexible($fd: row, $ai: center, $jc: space-between, $gap: 8px);
+
+    &-title {
+      font-size: 24px;
+      font-weight: 500;
+      color: $primary-color;
+    }
+  }
+  &__wrapper {
+    @include flexible($fd: column, $ai: center, $jc: space-between);
+  }
+  &__task {
+    @include flexible($fd: row, $ai: center, $jc: space-between, $gap: 4px);
+    &-title {
+      color: $gray-color-100;
+    }
+
+
+    &-time {
+      @include flexible($fd: row, $ai: center, $jc: space-between, $gap: 4px);
+      color: $gray-color-80;
+    }
+  }
+}
