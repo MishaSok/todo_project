@@ -1,6 +1,8 @@
 import React from 'react'
+import Typography from '../../UIkit/Typography'
 import Logo from '../../assets/images/logo.svg'
 import './Header.scss'
+import Icon from '../../UIkit/Icon'
 
 function Header() {
   return (
@@ -10,16 +12,40 @@ function Header() {
           src={Logo}
           alt="logo"
         />
-        <p className="header__logo-title">LifeTest</p>
+        <Typography
+          variant="title-h1-medium"
+          className="header__logo-title"
+          color="primary-color"
+        >
+          LifeTest
+        </Typography>
       </div>
       <div className="header__wrapper">
         <div className="header__task">
-          <p className="header__task-title">Сделать UI-kit</p>
-          {/*<PauseIcon className="header__task-icon" />*/}
+          <Typography
+            variant="text-regular"
+            color="gray-color-100"
+          >
+            Сделать UI-kit
+          </Typography>
+          <Icon
+            iconName="stop"
+            color="primary-color"
+          />
         </div>
         <div className="header__task-time">
-          <div>Сегодня: </div>
-          <span>0:20:42</span>
+          <Typography
+            color="gray-color-80"
+            variant="text-regular"
+          >
+            Сегодня:{' '}
+          </Typography>
+          <Typography
+            color="gray-color-80"
+            variant="time-regular"
+          >
+            0:20:42
+          </Typography>
         </div>
       </div>
     </div>

@@ -10,8 +10,6 @@
 
     &-title {
       font-size: 24px;
-      font-weight: 500;
-      color: $primary-color;
     }
   }
   &__wrapper {
@@ -19,14 +17,10 @@
   }
   &__task {
     @include flexible($fd: row, $ai: center, $jc: space-between, $gap: 4px);
-    &-title {
-      color: $gray-color-100;
-    }
 
 
     &-time {
       @include flexible($fd: row, $ai: center, $jc: space-between, $gap: 4px);
-      color: $gray-color-80;
     }
   }
 }

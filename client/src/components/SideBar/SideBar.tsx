@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import './SideBar.scss'
+import Icon from '../../UIkit/Icon'
 
 function SideBar() {
   const [inputValue, setInputValue] = useState('Добавить папку')
@@ -18,10 +19,10 @@ function SideBar() {
   return (
     <div className="sidebar">
       <div className="sidebar__top ">
-        {/*<FeatherIcon*/}
-        {/*    icon="folder-plus"*/}
-        {/*    stroke="#787878"*/}
-        {/*/>*/}
+        <Icon
+          iconName="folderPlus"
+          color="gray-color-80"
+        />
         {inputOpened ? (
           <div className="sidebar__top-input">
             <form onSubmit={handleOnSubmit}>

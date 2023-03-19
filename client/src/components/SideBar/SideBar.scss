@@ -1,0 +1,33 @@
+@import "../../assets/styles/main";
+.sidebar {
+  @include flexible($fd: column, $ai: center, $gap: 8px);
+  background: $gray-color-20;
+  height: 100vh;
+  width: 268px;
+  padding: 24px 32px;
+
+  &__top {
+    @include flexible($fd: row, $ai: center, $gap: 7px);
+    width: 204px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: $gray-color-80;
+    input {
+      color: $gray-color-80;
+      background: transparent;
+      width: 125px;
+
+    }
+    &-input {
+      @include flexible($fd: row, $ai: center, $jc: space-between);
+    }
+  }
+
+  &__items {
+    @include flexible($fd: column, $ai: center, $jc: space-between, $gap: 8px);
+
+  }
+}
