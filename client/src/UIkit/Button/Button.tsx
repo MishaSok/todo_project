@@ -1,7 +1,7 @@
 import React from 'react'
-import Typography from '../Typography/Typography'
-import classNames from 'classnames'
 import ButtonProps from './Button.types'
+import classNames from 'classnames'
+import Typography from '../Typography'
 import './Button.scss'
 
 function Button({ className, icon, children, variant, type, onClick }: ButtonProps) {

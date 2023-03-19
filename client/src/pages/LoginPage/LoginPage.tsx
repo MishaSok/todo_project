@@ -1,6 +1,6 @@
 import React from 'react'
-import Typography from '../../components/Typography'
-import Button from '../../components/Button'
+import Typography from '../../UIkit/Typography'
+import Button from '../../UIkit/Button'
 import './LoginPage.scss'
 import { SubmitHandler, useForm } from 'react-hook-form'
 

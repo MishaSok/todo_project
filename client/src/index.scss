@@ -1,6 +1,11 @@
 @import "assets/styles/colors/colors";
 @import "assets/styles/main";
 
+:root {
+  @each $name, $color in $colors {
+    --#{$name}: #{$color};
+  }
+}
 * {
   margin: 0;
   padding: 0;
