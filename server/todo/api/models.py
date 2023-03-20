@@ -17,6 +17,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
 
+    # VERY IMPORTANT / DO NOT TOUCH
     def __str__(self):
         return self.email
 

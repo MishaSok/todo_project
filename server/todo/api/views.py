@@ -46,17 +46,27 @@ class RegisterUserAPIView(APIView):
 
             user = CustomUser.objects.create_user(email=request.data['email'], password=request.data['password'],
                                                   last_login=aware_datetime)
+
+            # Find user_id
+            try:
+                user_id = CustomUser.objects.all().get(email=request.data['email'])
+            except Exception as user_id_error:
+                print(user_id_error)
+
+                return Response({'message': 'An unexpected error has occurred. Try again',
+                                 'status': 'failure'})
             self.default_folders(email=request.data['email'])
             return Response({'message': f'New user {user.email}',
-                             'status': 'success'})
+                             'status': 'success',
+                             'user_id': user_id.id})
 
     @staticmethod
     def default_folders(email):
         try:
             archive_default_folder = Tasks(email=email, folder_name='Archive',
-                                           task_text='Your archive task <3')
+                                           task_text='service_task')
             main_tasks_default_folder = Tasks(email=email, folder_name='Main Tasks',
-                                              task_text='Your main task <3')
+                                              task_text='service_task')
             archive_default_folder.save()
             main_tasks_default_folder.save()
         except Exception as Error:
@@ -79,9 +89,15 @@ class LoginUserAPIView(APIView):
 
         user = CustomUser.objects.all().get(email=request.data['email'])
 
+        # Find user_id
+        try:
+            user_id = CustomUser.objects.all().get(email=request.data['email'])
+        except Exception as user_id_error:
+            print(user_id_error)
         if user.check_password(request.data['password']):
             return Response({'message': 'Successful authorization',
-                             'status': 'success'})
+                             'status': 'success',
+                             'user_id': user_id.id})
         else:
             return Response({'message': 'Wrong password',
                              'status': 'failure'})
@@ -95,7 +111,7 @@ class CreateFolderView(APIView):
                              'status': 'failure'})
         try:
             folder = Tasks(email=request.data['email'], folder_name=request.data['folder_name'],
-                           task_text='First task')
+                           task_text='service_task')
             folder.save()
             return Response({'message': 'Successfully',
                              'status': 'success'})
@@ -118,3 +134,36 @@ class RemoveFolderView(APIView):
             print(FolderRemoveError)
             return Response({'message': 'An unexpected error has occurred. Try again',
                              'status': 'failure'})
+
+
+class MainMenuView(APIView):
+    def get(self, request, pk):
+        try:
+            data = []
+            folder_id = 1
+            for folder_name in self.get_all_folders(pk):
+                data.append({
+                    'id': folder_id,
+                    'folderName': folder_name, })
+                folder_id += 1
+            # ADD TASKS FROM MAIN FOLDER TO JSON RESPONSE
+            print(self.get_all_default_tasks(pk))
+            return Response(data)
+        except Exception as MainMenu:
+            print(MainMenu)
+            return Response({'message': 'An unexpected error has occurred. Try again',
+                             'status': 'failure'})
+
+    @staticmethod
+    def get_all_folders(pk):
+        user = CustomUser.objects.all().get(pk=pk)
+        user_email = str(user)
+        folders = Tasks.objects.filter(email=user_email).values()
+        return [i['folder_name'] for i in folders]
+
+    @staticmethod
+    def get_all_default_tasks(pk):
+        user = CustomUser.objects.all().get(pk=pk)
+        user_email = str(user)
+        tasks = Tasks.objects.filter(email=user_email, folder_name='Main Tasks').values()
+        return [task['task_text'] for task in tasks if task['task_text'] != 'service_task']

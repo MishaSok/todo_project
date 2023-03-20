@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import CustomUserAPIView, RegisterUserAPIView, LoginUserAPIView, CreateFolderView, RemoveFolderView
+from api.views import CustomUserAPIView, RegisterUserAPIView, LoginUserAPIView, CreateFolderView, RemoveFolderView, MainMenuView
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenVerifyView
 
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
     path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
     # FOLDER API
     path('api/folder/create', CreateFolderView.as_view()),
-    path('api/folder/remove', RemoveFolderView.as_view())
+    path('api/folder/remove', RemoveFolderView.as_view()),
+    path('menu/<int:pk>', MainMenuView.as_view())
 ]
