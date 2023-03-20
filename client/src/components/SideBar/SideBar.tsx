@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import './SideBar.scss'
 import Icon from '../../UIkit/Icon'
+import Folder from '../../UIkit/Folder'
 
 function SideBar() {
   const [inputValue, setInputValue] = useState('Добавить папку')
@@ -15,6 +16,40 @@ function SideBar() {
     setInputOpened(true)
     setInputValue('')
   }
+  const limitFolderName = (folderName: string) => {
+    if (folderName.length >= 12) {
+      let slicedFolderName = folderName.slice(0, 12)
+      return `${slicedFolderName}...`
+    }
+    return folderName
+  }
+
+  const folders = [
+    {
+      id: 1,
+      folderName: 'Задачи бэкера',
+    },
+    {
+      id: 2,
+      folderName: 'Задачи бэкера',
+    },
+    {
+      id: 3,
+      folderName: 'Задачи бэкера',
+    },
+    {
+      id: 4,
+      folderName: 'Задачи бэкера',
+    },
+    {
+      id: 5,
+      folderName: 'Задачи бэкера',
+    },
+    {
+      id: 6,
+      folderName: 'Задачи бэкера',
+    },
+  ]
 
   return (
     <div className="sidebar">
@@ -40,10 +75,13 @@ function SideBar() {
         )}
       </div>
       <div className="sidebar__items">
-        <div>folder</div>
-        <div>folder</div>
-        <div>folder</div>
-        <div>folder</div>
+        {folders.map((folder, index) => (
+          <Folder
+            folderName={limitFolderName(folder.folderName)}
+            id={folder.id}
+            key={index}
+          />
+        ))}
       </div>
     </div>
   )

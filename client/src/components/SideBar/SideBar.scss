@@ -27,7 +27,7 @@
   }
 
   &__items {
-    @include flexible($fd: column, $ai: center, $jc: space-between, $gap: 8px);
+    @include flexible($fd: column, $ai: center, $jc: space-between, $gap: 28px);
 
   }
 }

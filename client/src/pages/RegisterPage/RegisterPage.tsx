@@ -3,6 +3,8 @@ import Typography from '../../UIkit/Typography'
 import Button from '../../UIkit/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+
 import './RegisterPage.scss'
 
 interface IRegisterFields {
@@ -13,8 +15,19 @@ interface IRegisterFields {
 function RegisterPage() {
   const { register, handleSubmit } = useForm<IRegisterFields>()
 
-  const onSubmit: SubmitHandler<IRegisterFields> = (data, e) => {
-    console.log(data, e)
+  const onSubmit: SubmitHandler<IRegisterFields> = async (data, e) => {
+    e?.preventDefault()
+    try {
+      if (data.password === data.confirm_password) {
+        await axios
+          .post('http://192.168.0.103:8000/api/register_user', data)
+          .then((res) => localStorage.setItem('userId', res.data.user_id))
+      } else {
+        console.log('')
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -34,26 +47,17 @@ function RegisterPage() {
           <input
             placeholder="email"
             type="text"
-            {...(register('email'),
-            {
-              required: true,
-            })}
+            {...register('email')}
           />
           <input
             placeholder="password"
             type="text"
-            {...(register('password'),
-            {
-              required: true,
-            })}
+            {...register('password')}
           />
           <input
             placeholder="confirm password"
             type="text"
-            {...(register('confirm_password'),
-            {
-              required: true,
-            })}
+            {...register('confirm_password')}
           />
           <Button
             className="register-page__button"

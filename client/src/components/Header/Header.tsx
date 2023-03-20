@@ -17,7 +17,7 @@ function Header() {
           className="header__logo-title"
           color="primary-color"
         >
-          LifeTest
+          OnTime
         </Typography>
       </div>
       <div className="header__wrapper">
