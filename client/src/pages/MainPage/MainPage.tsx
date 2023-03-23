@@ -1,13 +1,16 @@
 import React from 'react'
-import Header from '../../components/Header'
-import './MainPage.scss'
 import SideBar from '../../components/SideBar'
+import TaskList from '../../components/TaskList'
+import TaskBar from '../../components/TaskBar'
+
+import './MainPage.scss'
 
 function MainPage() {
   return (
-    <div>
-      <Header />
+    <div className="main-page">
       <SideBar />
+      <TaskList />
+      <TaskBar />
     </div>
   )
 }

@@ -1,0 +1,50 @@
+@import "../../assets/styles/main";
+
+.main {
+  @include flexible($fd: column);
+  padding: 0 16px;
+
+  &__folder {
+    font-weight: 500;
+    font-size: 24px;
+    color: $gray-color-100;
+  }
+
+
+  &__sort {
+    @include flexible($fd: row, $ai: center, $jc: space-between);
+    width: 100%;
+    padding: 28px 0;
+    &-title {
+      @include flexible($fd: row, $jc: space-between, $ai:center,  $gap: 5px);
+      color: $primary-color;
+      font-weight: 500;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+
+  }
+  &__titles {
+    @include flexible($fd: row, $jc:space-between, $ai: center);
+    margin-top: 28px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    color: $gray-color-80;
+  }
+
+  &__task {
+    @include flexible($fd: row,$ai: center, $gap: 8px);
+    padding: 16px 0;
+    margin-top: 8px;
+    cursor: pointer;
+    &-add {
+      font-weight: 400;
+      font-size: 16px;
+      color: $gray-color-80;
+    }
+
+  }
+
+}

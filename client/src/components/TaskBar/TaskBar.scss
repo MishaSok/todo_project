@@ -1,0 +1,44 @@
+@import "../../assets/styles/main";
+
+.task-bar {
+  padding: 24px 16px;
+  border-left: 1px solid $gray-color-40;
+  &__folder {
+    margin-top: 8px;
+  }
+
+  &__time {
+    @include flexible($fd: row, $jc: space-between, $ai: center);
+    margin-top: 24px;
+
+    &-item {
+      @include flexible($fd: column, $ai: center, $gap: 2px);
+    }
+  }
+
+  &__tools {
+    margin-top: 35px;
+    &__checkbox {
+      cursor: pointer;
+    }
+    svg {
+      cursor: pointer;
+    }
+
+    &-item {
+      @include flexible($fd: row, $ai: center, $gap: 6px);
+      padding: 8px 0;
+    }
+
+  }
+
+  .no-tasks {
+    &__desc {
+      margin-top: 8px;
+    }
+    &__img {
+      margin-top: 60px;
+    }
+  }
+
+}

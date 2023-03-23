@@ -6,28 +6,21 @@ import Typography from '../Typography'
 import './Folder.scss'
 
 function Folder({ id, className, folderName }: FolderProps) {
-  const [activeFolder, setActiveFolder] = useState<number>()
-  const FolderClassName = classNames(
-    'folder',
-    {
-      'folder active': activeFolder === id,
-    },
-    className,
-  )
+  const [activeFolder, setActiveFolder] = useState<any>()
 
-  const handleOnClick = () => {
+  const handleClick = () => {
     setActiveFolder(id)
-    console.log(activeFolder)
+    console.log(`id ${id}, activeID ${activeFolder}`)
   }
 
   return (
     <div
-      className={FolderClassName}
-      onClick={handleOnClick}
+      className={`folder ${activeFolder === id ? 'active' : ''}`}
+      onClick={handleClick}
     >
       <Typography
         variant="title-h2-medium"
-        color="gray-color-80"
+        color={activeFolder === id ? 'gray-color-0' : 'gray-color-80'}
       >
         {folderName}
       </Typography>

@@ -1,0 +1,11 @@
+@import "../../../assets/styles/main";
+
+.checkboxInput {
+  @include button(24px, $gray-color-0);
+  height: 24px;
+  @include border(solid, $gray-color-60, 8px, 1px);
+
+  &--checked {
+    background-color: $primary-color;
+  }
+}

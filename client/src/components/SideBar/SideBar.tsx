@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react'
-import './SideBar.scss'
+import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../UIkit/Icon'
 import Folder from '../../UIkit/Folder'
+import './SideBar.scss'
 
 function SideBar() {
   const [inputValue, setInputValue] = useState('Добавить папку')
   const [inputOpened, setInputOpened] = useState(false)
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleOnSubmit = () => {
     setInputOpened(false)
@@ -16,6 +16,11 @@ function SideBar() {
     setInputOpened(true)
     setInputValue('')
   }
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [inputOpened])
+
   const limitFolderName = (folderName: string) => {
     if (folderName.length >= 12) {
       let slicedFolderName = folderName.slice(0, 12)
