@@ -1,6 +1,7 @@
 @import "../../assets/styles/main";
 
 .task-bar {
+  width: 318px;
   padding: 24px 16px;
   border-left: 1px solid $gray-color-40;
   &__folder {

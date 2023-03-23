@@ -4,8 +4,10 @@ import Folder from '../../UIkit/Folder'
 import './SideBar.scss'
 
 function SideBar() {
+  const [sideBarOpened, setSideBarOpened] = useState(false)
   const [inputValue, setInputValue] = useState('Добавить папку')
   const [inputOpened, setInputOpened] = useState(false)
+  const [activeFolder, setActiveFolder] = useState<any>('main')
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleOnSubmit = () => {
@@ -22,8 +24,8 @@ function SideBar() {
   }, [inputOpened])
 
   const limitFolderName = (folderName: string) => {
-    if (folderName.length >= 12) {
-      let slicedFolderName = folderName.slice(0, 12)
+    if (folderName.length >= 15) {
+      let slicedFolderName = folderName.slice(0, 15)
       return `${slicedFolderName}...`
     }
     return folderName
@@ -32,29 +34,28 @@ function SideBar() {
   const folders = [
     {
       id: 1,
-      folderName: 'Задачи бэкера',
+      folderName: 'Задачи Дениса',
     },
     {
       id: 2,
-      folderName: 'Задачи бэкера',
+      folderName: 'Задачи Дениса',
     },
     {
       id: 3,
-      folderName: 'Задачи бэкера',
-    },
-    {
-      id: 4,
-      folderName: 'Задачи бэкера',
-    },
-    {
-      id: 5,
-      folderName: 'Задачи бэкера',
-    },
-    {
-      id: 6,
-      folderName: 'Задачи бэкера',
+      folderName: 'Задачи Дениса',
     },
   ]
+  if (!sideBarOpened) {
+    return (
+      <div className="sidebar__closed">
+        <Icon
+          onClick={() => setSideBarOpened(true)}
+          iconName="folder"
+          color="gray-color-80"
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="sidebar">
@@ -62,6 +63,7 @@ function SideBar() {
         <Icon
           iconName="folderPlus"
           color="gray-color-80"
+          onClick={() => setSideBarOpened(false)}
         />
         {inputOpened ? (
           <div className="sidebar__top-input">
@@ -83,10 +85,25 @@ function SideBar() {
         {folders.map((folder, index) => (
           <Folder
             folderName={limitFolderName(folder.folderName)}
+            onClick={() => setActiveFolder(folder.id)}
+            activeFolder={activeFolder}
             id={folder.id}
-            key={index}
+            key={folder.id}
           />
         ))}
+        <Folder
+          id={'main'}
+          onClick={() => setActiveFolder('main')}
+          activeFolder={activeFolder}
+          folderName="Основные задачи"
+        />
+        <Folder
+          id={'archive'}
+          onClick={() => setActiveFolder('archive')}
+          activeFolder={activeFolder}
+          folderName="Архив"
+          icon="archive"
+        />
       </div>
     </div>
   )

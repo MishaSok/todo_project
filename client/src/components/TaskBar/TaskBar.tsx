@@ -8,11 +8,7 @@ import './TaskBar.scss'
 
 function TaskBar() {
   const [checked, setChecked] = useState(false)
-  const [activeTask, setActiveTask] = useState('Сделать UI')
-
-  const setCheckedState = () => {
-    setChecked((prevState) => !prevState)
-  }
+  const [activeTask, setActiveTask] = useState('')
 
   return (
     <div className="task-bar">
@@ -55,7 +51,7 @@ function TaskBar() {
               <CheckBoxInput
                 className="task-bar__tools__checkbox"
                 state={checked}
-                onClick={setCheckedState}
+                onClick={() => setChecked((prevState) => !prevState)}
               />
               <Typography
                 variant="title-h2-medium"

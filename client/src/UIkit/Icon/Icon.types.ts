@@ -10,5 +10,6 @@ interface IconProps {
   height?: number
   viewBox?: number
   color?: ColorNamesTypes
+  onClick?: () => void
 }
 export default IconProps

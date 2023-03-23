@@ -36,7 +36,7 @@ function TaskList() {
             color="primary-color"
           />
           <Typography
-            variant="text-regular"
+            variant="title-h2-medium"
             color="primary-color"
           >
             Сортировка

@@ -5,6 +5,7 @@
   height: 100vh;
   width: 268px;
   padding: 24px 32px;
+  transition: all 0.3s ease;
 
   &__top {
     @include flexible($fd: row, $ai: center, $gap: 7px);
@@ -29,5 +30,15 @@
   &__items {
     @include flexible($fd: column, $ai: center, $jc: space-between, $gap: 28px);
 
+  }
+  &__closed {
+    width: 64px;
+    height: 100vh;
+    padding: 32px 20px;
+    background: $gray-color-20;
+    transition: all 0.2s ease;
+    svg {
+      cursor: pointer;
+    }
   }
 }

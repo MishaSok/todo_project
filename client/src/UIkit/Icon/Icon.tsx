@@ -19,6 +19,7 @@ function Icon({
   height = 0,
   viewBox = 24,
   color = 'gray-color-100',
+  onClick,
 }: IconProps) {
   const [translatePathY, setTranslatePathY] = useState<number>(0)
   const [translatePathX, setTranslatePathX] = useState<number>(0)
@@ -69,6 +70,7 @@ function Icon({
       color={getColorAsCSSVariable(color)}
       viewBox={`${-translatePathX} ${-translatePathY} ${viewBox} ${viewBox}`}
       fill="none"
+      onClick={onClick}
     >
       {iconsPaths[iconName]}
     </svg>

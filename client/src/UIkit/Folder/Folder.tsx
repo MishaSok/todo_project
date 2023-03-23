@@ -1,22 +1,18 @@
 import React, { useState } from 'react'
 import FolderProps from './Folder.types'
-import classNames from 'classnames'
 import Icon from '../Icon'
 import Typography from '../Typography'
 import './Folder.scss'
 
-function Folder({ id, className, folderName }: FolderProps) {
-  const [activeFolder, setActiveFolder] = useState<any>()
-
-  const handleClick = () => {
-    setActiveFolder(id)
-    console.log(`id ${id}, activeID ${activeFolder}`)
-  }
+function Folder({ id, activeFolder, className, folderName, onClick, icon }: FolderProps) {
+  const [hover, setHover] = useState(false)
 
   return (
     <div
       className={`folder ${activeFolder === id ? 'active' : ''}`}
-      onClick={handleClick}
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <Typography
         variant="title-h2-medium"
@@ -24,7 +20,14 @@ function Folder({ id, className, folderName }: FolderProps) {
       >
         {folderName}
       </Typography>
-      <Icon iconName="close" />
+      {hover && id !== 'archive' && id !== 'main' ? (
+        <Icon
+          iconName="close"
+          color={activeFolder === id ? 'gray-color-0' : 'gray-color-100'}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   )
 }
