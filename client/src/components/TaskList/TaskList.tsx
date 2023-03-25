@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../UIkit/Icon'
 import Typography from '../../UIkit/Typography'
 import Task from '../Task'
+import SortPopUp from '../SortPopUp'
 
 import './TaskList.scss'
-import SortPopUp from '../SortPopUp'
 
 function TaskList() {
   const [inputValue, setInputValue] = useState('Добавить задачу')
   const [inputOpened, setInputOpened] = useState(false)
+  const [sortOpened, setSortOpened] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -31,7 +32,10 @@ function TaskList() {
     <div className="main">
       <div className="main__sort">
         <div className="main__folder">Задачи Дениса</div>
-        <div className="main__sort-title">
+        <div
+          className="main__sort-title"
+          onClick={() => setSortOpened((state) => !state)}
+        >
           <Icon
             iconName="sorting"
             color="primary-color"
@@ -42,7 +46,7 @@ function TaskList() {
           >
             Сортировка
           </Typography>
-          <SortPopUp />
+          {sortOpened && <SortPopUp className="main__sort__popup" />}
         </div>
       </div>
 

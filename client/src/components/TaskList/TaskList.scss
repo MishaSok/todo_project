@@ -16,6 +16,14 @@
     @include flexible($fd: row, $ai: center, $jc: space-between);
     width: 100%;
     padding: 28px 0;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    &__popup {
+      position: absolute;
+      z-index: 2;
+      top: 65px;
+      right: 0;
+    }
     &-title {
       @include flexible($fd: row, $jc: space-between, $ai:center,  $gap: 5px);
       color: $primary-color;

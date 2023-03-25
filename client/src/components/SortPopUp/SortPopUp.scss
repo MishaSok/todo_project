@@ -6,6 +6,9 @@
   padding: 8px 16px;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  background-color: $gray-color-0;
+  position: relative;
+  transition: all 0.3s ease-in-out;
   &__title {
     padding: 8px 8px;
   }
