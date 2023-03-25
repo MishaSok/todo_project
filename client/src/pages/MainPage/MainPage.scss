@@ -1,9 +1,6 @@
 @import "../../assets/styles/main";
 
 .main-page {
-  //display: grid;
-  //grid-template-columns: 268px 1fr 318px;
-  //position: relative;
-  @include flexible($fd: row)
+  @include flexible($fd: row);
 
 }

@@ -5,11 +5,11 @@
 }
 
 @mixin title-h1-medium {
-  @include typography(24px, 500, 36px);
+  @include typography($fs: 24px,$fw: 500, $lh:36px);
 }
 @mixin title-h2-medium {
-  @include typography(16px, 500, 24px);
+  @include typography($fs: 16px, $fw: 500,$lh: 24px);
 }
 @mixin text-regular {
-  @include typography(16px, 400, 24px);
+  @include typography($fs: 16px, $fw: 400,$lh: 24px);
 }

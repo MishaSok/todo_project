@@ -1,0 +1,41 @@
+@import "../../assets/styles/main";
+
+.sort-popup {
+  @include flexible($fd: column);
+  width: 277px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  &__title {
+    padding: 8px 8px;
+  }
+  &__items {
+    @include flexible($fd: column);
+
+    &__item {
+      @include flexible($fd: row, $ai: center, $gap: 12px);
+      padding: 12px 8px;
+      width: 245px;
+      border-radius: 12px;
+      input {
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        border: 1px solid $gray-color-60;
+        transition: 0.2s all linear;
+        outline: none;
+
+        &:checked {
+          border: 6px solid $primary-color;
+        }
+      }
+      &:hover {
+        background-color: $gray-color-20;
+      }
+    }
+  }
+}

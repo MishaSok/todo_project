@@ -4,6 +4,7 @@ import Typography from '../../UIkit/Typography'
 import Task from '../Task'
 
 import './TaskList.scss'
+import SortPopUp from '../SortPopUp'
 
 function TaskList() {
   const [inputValue, setInputValue] = useState('Добавить задачу')
@@ -41,6 +42,7 @@ function TaskList() {
           >
             Сортировка
           </Typography>
+          <SortPopUp />
         </div>
       </div>
 
