@@ -3,6 +3,8 @@ import Typography from '../../UIkit/Typography'
 import Button from '../../UIkit/Button'
 import './LoginPage.scss'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 interface IRegisterFields {
   email: string
@@ -15,11 +17,18 @@ function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<IRegisterFields>()
+  const navigate = useNavigate()
 
-  const onSubmit: SubmitHandler<IRegisterFields> = (data, e) => {
-    console.log(data, e)
+  const onSubmit: SubmitHandler<IRegisterFields> = async (data, e) => {
+    try {
+      await axios.post('http://192.168.0.103:8000/api/login', data).then((res) => {
+        localStorage.setItem('userId', res.data.user_id)
+        navigate('/')
+      })
+    } catch (e) {
+      console.error(e)
+    }
   }
-  console.log(errors)
   return (
     <div className="login-page">
       <div className="login-page__wrapper">

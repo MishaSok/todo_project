@@ -3,9 +3,26 @@ import FolderProps from './Folder.types'
 import Icon from '../Icon'
 import Typography from '../Typography'
 import './Folder.scss'
+import axios from 'axios'
+import { useAppDispatch } from '../../store/hooks/hooks'
+import { removeFolder } from '../../store/Reducers/FoldersReducer/FoldersSlice'
 
 function Folder({ id, activeFolder, className, folderName, onClick, icon }: FolderProps) {
   const [hover, setHover] = useState(false)
+
+  const dispatch = useAppDispatch()
+
+  const onDeleteFolder = async () => {
+    await axios
+      .delete('http://192.168.0.103:8000/api/folder', {
+        data: {
+          user_id: localStorage.getItem('userId'),
+          folder_name: folderName,
+        },
+      })
+      .then((res) => console.log(res))
+    dispatch(removeFolder(id))
+  }
 
   return (
     <div
@@ -20,8 +37,9 @@ function Folder({ id, activeFolder, className, folderName, onClick, icon }: Fold
       >
         {folderName}
       </Typography>
-      {hover && id !== 'archive' && id !== 'main' ? (
+      {hover && id !== 'Archive' && id !== 'Main Tasks' ? (
         <Icon
+          onClick={onDeleteFolder}
           iconName="close"
           color={activeFolder === id ? 'gray-color-0' : 'gray-color-100'}
         />

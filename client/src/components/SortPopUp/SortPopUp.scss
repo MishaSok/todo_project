@@ -5,7 +5,7 @@
   width: 277px;
   padding: 8px 16px;
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
   background-color: $gray-color-0;
   position: relative;
   transition: all 0.3s ease-in-out;
@@ -20,6 +20,7 @@
       padding: 12px 8px;
       width: 245px;
       border-radius: 12px;
+      transition: all 0.2s ease-in-out;
       input {
         cursor: pointer;
         -webkit-appearance: none;

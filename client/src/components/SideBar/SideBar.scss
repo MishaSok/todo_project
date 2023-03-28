@@ -6,6 +6,7 @@
   width: 268px;
   padding: 24px 32px;
   transition: all 0.3s ease;
+  overflow: auto;
 
   &__top {
     @include flexible($fd: row, $ai: center, $gap: 7px);

@@ -4,7 +4,7 @@ interface FolderProps {
   className?: string
   folderName: string
   id: number | string
-  activeFolder: number
+  activeFolder: number | string
   onClick?: () => void
   icon?: IconNameTypes
 }

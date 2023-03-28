@@ -1,6 +1,7 @@
 @import "../../assets/styles/main";
 
 .main-page {
-  @include flexible($fd: row);
-
+  &__content {
+    @include flexible($fd: row);
+  }
 }

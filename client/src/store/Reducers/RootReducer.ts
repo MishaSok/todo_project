@@ -1,8 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import foldersSlice from '../Reducers/FoldersReducer/FoldersSlice'
+import foldersSlice from './FoldersReducer/FoldersSlice'
+import tasksSlice from './TasksReducer/TasksReducer'
 
 const rootReducer = combineReducers({
-  foldersStore: foldersSlice,
+  foldersSlice,
+  tasksSlice,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

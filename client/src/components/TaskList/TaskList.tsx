@@ -3,7 +3,12 @@ import Icon from '../../UIkit/Icon'
 import Typography from '../../UIkit/Typography'
 import Task from '../Task'
 import SortPopUp from '../SortPopUp'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 
+import { addTask, setTasks } from '../../store/Reducers/TasksReducer/TasksReducer'
+import axios from 'axios'
+import { Folder, setFolders } from '../../store/Reducers/FoldersReducer/FoldersSlice'
+import { TaskType } from '../../store/Reducers/TasksReducer/TasksReducer'
 import './TaskList.scss'
 
 function TaskList() {
@@ -12,6 +17,26 @@ function TaskList() {
   const [sortOpened, setSortOpened] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const dispatch = useAppDispatch()
+  const tasks = useAppSelector((state) => state.tasksSlice.tasks)
+  const { activeFolder } = useAppSelector((state) => state.foldersSlice)
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId')
+    let folders: Folder[] = []
+    let tasks: TaskType[] = []
+
+    const getData = async () => {
+      await axios.get(`http://192.168.0.103:8000/api/init/${userId}`).then((res) => {
+        folders = res.data.folders
+        tasks = res.data.tasks
+      })
+      dispatch(setFolders(folders))
+      dispatch(setTasks(tasks))
+    }
+    getData()
+  }, [dispatch])
 
   useEffect(() => {
     if (inputRef.current) {
@@ -24,7 +49,27 @@ function TaskList() {
     setInputValue('')
   }
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    await axios
+      .post(`http://192.168.0.103:8000/api/tasks`, {
+        user_id: localStorage.getItem('userId'),
+        folder_id: activeFolder,
+        task_text: inputValue,
+      })
+      .then((res) =>
+        dispatch(
+          addTask({
+            id: res.data.id,
+            name: res.data.name,
+            completed: res.data.completed,
+            folderName: res.data.folderName,
+            timeToday: res.data.timeToday,
+            timeTotal: res.data.timeTotal,
+          }),
+        ),
+      )
+
     setInputOpened(false)
     setInputValue('Добавить задачу')
   }
@@ -84,31 +129,14 @@ function TaskList() {
           <div onClick={handleOnClick}>{inputValue}</div>
         )}
       </div>
-      <Task
-        taskName="Сделать UI-kit"
-        taskTotalTime="03:12:12"
-      />
-      <Task
-        taskName="Сделать UI-kit"
-        taskTotalTime="03:12:12"
-      />
-      <Task
-        taskName="Сделать UI-kit"
-        taskTotalTime="03:12:12"
-      />
-      <Task
-        taskName="Сделать UI-kit"
-        taskTotalTime="03:12:12"
-      />
-      {/*{filteredTasks.map((task) => (*/}
-      {/*  <Task*/}
-      {/*    key={uuid()}*/}
-      {/*    taskName={task.name}*/}
-      {/*    taskTotalTime={task.total_time}*/}
-      {/*    taskId={task.id}*/}
-      {/*    activeFolderId={activeFolderId}*/}
-      {/*  />*/}
-      {/*))}*/}
+      {tasks.map((task) => (
+        <Task
+          key={task.id}
+          taskName={task.name}
+          taskId={task.id}
+          taskTotalTime={task.timeTotal}
+        />
+      ))}
     </div>
   )
 }

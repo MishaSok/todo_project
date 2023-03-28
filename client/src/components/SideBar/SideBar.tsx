@@ -1,16 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../UIkit/Icon'
 import Folder from '../../UIkit/Folder'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
+import { addFolder, setActiveFolder } from '../../store/Reducers/FoldersReducer/FoldersSlice'
+import axios from 'axios'
 import './SideBar.scss'
 
 function SideBar() {
   const [sideBarOpened, setSideBarOpened] = useState(false)
   const [inputValue, setInputValue] = useState('Добавить папку')
   const [inputOpened, setInputOpened] = useState(false)
-  const [activeFolder, setActiveFolder] = useState<any>('main')
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleOnSubmit = () => {
+  const dispatch = useAppDispatch()
+  const { folders, activeFolder } = useAppSelector((state) => state.foldersSlice)
+
+  const handleOnSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    let folderId: number = 0
+    await axios
+      .post('http://192.168.0.103:8000/api/folder', {
+        user_id: localStorage.getItem('userId'),
+        folder_name: inputValue,
+      })
+      .then((res) => (folderId = res.data.folder_id))
+    dispatch(
+      addFolder({
+        id: folderId,
+        folderName: inputValue,
+      }),
+    )
     setInputOpened(false)
     setInputValue('Добавить папку')
   }
@@ -31,20 +50,6 @@ function SideBar() {
     return folderName
   }
 
-  const folders = [
-    {
-      id: 1,
-      folderName: 'Задачи Дениса',
-    },
-    {
-      id: 2,
-      folderName: 'Задачи Дениса',
-    },
-    {
-      id: 3,
-      folderName: 'Задачи Дениса',
-    },
-  ]
   if (!sideBarOpened) {
     return (
       <div className="sidebar__closed">
@@ -82,24 +87,24 @@ function SideBar() {
         )}
       </div>
       <div className="sidebar__items">
-        {folders.map((folder, index) => (
+        {folders.map((folder) => (
           <Folder
             folderName={limitFolderName(folder.folderName)}
-            onClick={() => setActiveFolder(folder.id)}
+            onClick={() => dispatch(setActiveFolder(folder.id))}
             activeFolder={activeFolder}
             id={folder.id}
             key={folder.id}
           />
         ))}
         <Folder
-          id={'main'}
-          onClick={() => setActiveFolder('main')}
+          id={'Main Tasks'}
+          onClick={() => dispatch(setActiveFolder('Main Tasks'))}
           activeFolder={activeFolder}
           folderName="Основные задачи"
         />
         <Folder
-          id={'archive'}
-          onClick={() => setActiveFolder('archive')}
+          id={'Archive'}
+          onClick={() => dispatch(setActiveFolder('Archive'))}
           activeFolder={activeFolder}
           folderName="Архив"
           icon="archive"

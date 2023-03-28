@@ -2,7 +2,7 @@ import React from 'react'
 import Typography from '../../UIkit/Typography'
 import Button from '../../UIkit/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 import './RegisterPage.scss'
@@ -14,16 +14,21 @@ interface IRegisterFields {
 }
 function RegisterPage() {
   const { register, handleSubmit } = useForm<IRegisterFields>()
+  const navigate = useNavigate()
 
   const onSubmit: SubmitHandler<IRegisterFields> = async (data, e) => {
     e?.preventDefault()
     try {
+      let status = ''
       if (data.password === data.confirm_password) {
         await axios
           .post('http://192.168.0.103:8000/api/register_user', data)
-          .then((res) => localStorage.setItem('userId', res.data.user_id))
+          .then((res) => (status = res.data.status))
+        if (status === 'success') {
+          navigate('/login')
+        }
       } else {
-        console.log('')
+        console.log('Пароли не совпадают !')
       }
     } catch (e) {
       console.error(e)
