@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type Folder = {
+export type FolderType = {
   id: number | string
   folderName: string
 }
 
 interface FolderState {
-  folders: Folder[]
+  folders: FolderType[]
   activeFolder: string | number
 }
 
@@ -19,10 +19,10 @@ const foldersSlice = createSlice({
   name: 'folders',
   initialState,
   reducers: {
-    setFolders(state, action: PayloadAction<Folder[]>) {
+    setFolders(state, action: PayloadAction<FolderType[]>) {
       state.folders = action.payload
     },
-    addFolder(state, action: PayloadAction<Folder>) {
+    addFolder(state, action: PayloadAction<FolderType>) {
       state.folders.push(action.payload)
     },
     removeFolder(state, action: PayloadAction<number | string>) {

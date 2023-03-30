@@ -3,24 +3,29 @@ import Icon from '../../UIkit/Icon'
 import CheckBoxInput from '../../UIkit/Inputs/CheckBoxInput'
 import Typography from '../../UIkit/Typography'
 import NoTaskImage from '../../assets/images/no-tasks.png'
+import { useAppSelector } from '../../store/hooks/hooks'
 
 import './TaskBar.scss'
 
 function TaskBar() {
   const [checked, setChecked] = useState(false)
-  const [activeTask, setActiveTask] = useState('')
+
+  const { tasks, activeTask } = useAppSelector((state) => state.tasksSlice)
+
+  const currentTaskIndex = tasks.findIndex((el) => el.id === activeTask)
+  const currentTask = tasks[currentTaskIndex]
 
   return (
     <div className="task-bar">
       {activeTask ? (
         <>
-          <Typography variant="title-h1-medium">{activeTask}</Typography>
+          <Typography variant="title-h1-medium">{currentTask.name}</Typography>
           <Typography
             className="task-bar__folder"
             variant="title-h2-medium"
             color="gray-color-80"
           >
-            Основные задачи
+            {currentTask.folderName}
           </Typography>
           <div className="task-bar__time">
             <div className="task-bar__time-item">
@@ -30,7 +35,7 @@ function TaskBar() {
               >
                 сегодня
               </Typography>
-              <Typography variant="time-regular">00:20:15</Typography>
+              <Typography variant="time-regular">{currentTask.timeToday}</Typography>
             </div>
             <Icon
               iconName="stop"
@@ -43,7 +48,7 @@ function TaskBar() {
               >
                 всего
               </Typography>
-              <Typography variant="time-regular">13:20:15</Typography>
+              <Typography variant="time-regular">{currentTask.timeTotal}</Typography>
             </div>
           </div>
           <div className="task-bar__tools">

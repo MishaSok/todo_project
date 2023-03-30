@@ -2,8 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import Icon from '../../UIkit/Icon'
 import Folder from '../../UIkit/Folder'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
-import { addFolder, setActiveFolder } from '../../store/Reducers/FoldersReducer/FoldersSlice'
 import axios from 'axios'
+
+import {
+  addFolder,
+  FolderType,
+  setActiveFolder,
+} from '../../store/Reducers/FoldersReducer/FoldersSlice'
 import './SideBar.scss'
 
 function SideBar() {
@@ -49,6 +54,17 @@ function SideBar() {
     }
     return folderName
   }
+  const onFolderClick = async (folder: FolderType) => {
+    await axios
+      .get('http://192.168.0.103:8000/api/update', {
+        data: {
+          user_id: localStorage.getItem('userId'),
+          folder_id: folder.id,
+        },
+      })
+      .then((res) => console.log(res))
+    dispatch(setActiveFolder(folder.id))
+  }
 
   if (!sideBarOpened) {
     return (
@@ -90,7 +106,7 @@ function SideBar() {
         {folders.map((folder) => (
           <Folder
             folderName={limitFolderName(folder.folderName)}
-            onClick={() => dispatch(setActiveFolder(folder.id))}
+            onClick={() => onFolderClick(folder)}
             activeFolder={activeFolder}
             id={folder.id}
             key={folder.id}

@@ -5,9 +5,9 @@ import Task from '../Task'
 import SortPopUp from '../SortPopUp'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 
-import { addTask, setTasks } from '../../store/Reducers/TasksReducer/TasksReducer'
+import { addTask, setActiveTask, setTasks } from '../../store/Reducers/TasksReducer/TasksReducer'
 import axios from 'axios'
-import { Folder, setFolders } from '../../store/Reducers/FoldersReducer/FoldersSlice'
+import { FolderType, setFolders } from '../../store/Reducers/FoldersReducer/FoldersSlice'
 import { TaskType } from '../../store/Reducers/TasksReducer/TasksReducer'
 import './TaskList.scss'
 
@@ -24,7 +24,7 @@ function TaskList() {
 
   useEffect(() => {
     const userId = localStorage.getItem('userId')
-    let folders: Folder[] = []
+    let folders: FolderType[] = []
     let tasks: TaskType[] = []
 
     const getData = async () => {
@@ -73,6 +73,11 @@ function TaskList() {
     setInputOpened(false)
     setInputValue('Добавить задачу')
   }
+
+  const onTaskClick = (task: TaskType) => {
+    dispatch(setActiveTask(task.id))
+  }
+
   return (
     <div className="main">
       <div className="main__sort">
@@ -131,6 +136,7 @@ function TaskList() {
       </div>
       {tasks.map((task) => (
         <Task
+          onClick={() => onTaskClick(task)}
           key={task.id}
           taskName={task.name}
           taskId={task.id}

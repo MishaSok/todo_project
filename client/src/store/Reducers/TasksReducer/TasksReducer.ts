@@ -11,10 +11,12 @@ export type TaskType = {
 
 interface TaskState {
   tasks: TaskType[]
+  activeTask: number
 }
 
 const initialState: TaskState = {
   tasks: [],
+  activeTask: 0,
 }
 
 const tasksSlice = createSlice({
@@ -30,9 +32,12 @@ const tasksSlice = createSlice({
     removeTask(state, action: PayloadAction<TaskType>) {
       state.tasks.filter((task) => task.id !== action.payload.id)
     },
+    setActiveTask(state, action: PayloadAction<number>) {
+      state.activeTask = action.payload
+    },
   },
 })
 
-export const { setTasks, addTask, removeTask } = tasksSlice.actions
+export const { setActiveTask, setTasks, addTask, removeTask } = tasksSlice.actions
 
 export default tasksSlice.reducer
