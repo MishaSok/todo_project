@@ -22,14 +22,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+class Folders(models.Model):
+    user_id = models.IntegerField()
+    folder_name = models.CharField(max_length=150)
+    can_be_deleted = models.BooleanField(default=True)
+
+
 class Tasks(models.Model):
-    email = models.CharField(unique=False, max_length=150)
-    folder_name = models.CharField(unique=False, max_length=30)
-    task_text = models.CharField(unique=False, max_length=100, default='None')
-    created_time = models.DateTimeField(default=timezone.now)
-    time_today = models.DateTimeField(default=datetime.datetime(2000, 1, 1))
-    time_all = models.DateTimeField(default=datetime.datetime(2000, 1, 1))
-    completed = models.BooleanField(default=False)
+    folder_id = models.IntegerField()
+    user_id = models.IntegerField()
+    task_text = models.CharField(max_length=150)
+    time_today = models.CharField(default='00:00:00', max_length=100)
+    time_all = models.CharField(default='00:00:00', max_length=100)
 
     def __str__(self):
-        return f'User: {self.email} Task_folder: {self.folder_name} Task_text:{self.task_text}'
+        return [self.folder_id, self.user_id, self.task_text,  self.time_today, self.time_all]
+
