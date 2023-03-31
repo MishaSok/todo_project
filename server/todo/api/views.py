@@ -231,17 +231,40 @@ class TasksView(APIView):
                              task_text=request.data['task_text']).save()
                 task = Tasks.objects.filter(email=user_email, folder_name=request.data['folder_id'],
                                             task_text=request.data['task_text']).values()
-
+                print(task[0]['time_today'])
+                try:
+                    time_today = str(task[0]['time_today']).split()[1].split('+')[0]
+                    time_all = str(task[0]['time_all']).split()[1].split('+')[0]
+                except Exception as time_error:
+                    pass
                 return Response({'id': task[0]['id'],
                                  'name': task[0]['task_text'],
                                  'completed': task[0]['completed'],
                                  'folderName': folder_name,
-                                 'timeToday': task[0]['time_today'],
-                                 'timeTotal': task[0]['time_all']})
+                                 'timeToday': time_today,
+                                 'timeTotal': time_all})
             else:
-                pass
+                folder_name = self.get_folder_name(request.data['folder_id'])
+                is_folder_name = self.check_folder_name(request.data['folder_id'])
+                task = Tasks(folder_name=folder_name, email=user_email,
+                             task_text=request.data['task_text']).save()
+                task = Tasks.objects.filter(email=user_email, folder_name=folder_name,
+                                            task_text=request.data['task_text']).values()
+                print(task[0]['time_today'])
+                try:
+                    time_today = str(task[0]['time_today']).split()[1].split('+')[0]
+                    time_all = str(task[0]['time_all']).split()[1].split('+')[0]
+                except Exception as time_error:
+                    pass
+                return Response({'id': task[0]['id'],
+                                 'name': task[0]['task_text'],
+                                 'completed': task[0]['completed'],
+                                 'folderName': folder_name,
+                                 'timeToday': time_today,
+                                 'timeTotal': time_all})
         except Exception as add_task_error:
             print(add_task_error)
+            print('error')
             return Response({'message': 'An unexpected error has occurred. Try again',
                              'status': 'failure'})
 
@@ -287,6 +310,11 @@ class TasksView(APIView):
                              'status': 'failure'})
 
     @staticmethod
+    def get_folder_name(id):
+        folder = Tasks.objects.filter(id=id, task_text='service_task').values()[0]
+        return folder['folder_name']
+
+    @staticmethod
     def check_request_data(request):
         if 'user_id' in request.data and 'folder_id' in request.data and 'task_text' in request.data:
             return True
@@ -312,3 +340,77 @@ class TasksView(APIView):
             return 'Основные задачи'
         else:
             return 'Архив'
+
+
+# {
+#    "id": 22,
+#    "name": "123",
+#    "completed": false,
+#   "folderName": "Test",
+#    "timeToday": "00:00:00",
+#    "timeTotal": "00:00:00"
+# }
+class UpdateTasksView(APIView):
+    def post(self, request):
+        try:
+            if self.check_request_data(request):
+                user_email = CustomUser.objects.all().get(id=request.data['user_id'])
+                res = self.get_all_tasks(request.data['user_id'], request.data['folder_id'])
+                data_tasks = []
+
+                for task in res:
+                    data_tasks.append({
+                        'id': task[0],
+                        'name': task[1],
+                        'completed': task[2],
+                        'folderName': task[3],
+                        'timeToday': task[4],
+                        'timeTotal': task[5]
+                    })
+
+                return Response({'tasks': data_tasks})
+            else:
+                return Response({'message': 'Not all fields are filled',
+                                 'status': 'failure'})
+
+
+        except Exception as Error:
+            return Response({'message': 'An unexpected error has occurred. Try again',
+                             'status': 'failure'})
+
+    @staticmethod
+    def user_email(user_id):
+        user_email = CustomUser.objects.all().get(id=user_id)
+        return str(user_email)
+
+    @staticmethod
+    def get_all_tasks(user_id, folder_id):
+        if folder_id == 'Archive' or folder_id == 'Main Tasks':
+            user = CustomUser.objects.all().get(id=user_id)
+            user_email = str(user)
+            tasks = Tasks.objects.filter(email=user_email, folder_name=folder_id).values()
+            res = []
+            for task in tasks:
+                if task['task_text'] != 'service_task':
+                    res.append([task['id'], task['task_text'], task['completed'], folder_id, task['time_today'],
+                                task['time_all']])
+            return res
+        else:
+            folder_name = Tasks.objects.filter(id=folder_id, task_text='service_task').values()[0]['folder_name']
+            print(folder_name)
+            user = CustomUser.objects.all().get(id=user_id)
+            user_email = str(user)
+            tasks = Tasks.objects.filter(email=user_email, folder_name=folder_name).values()
+            res = []
+            for task in tasks:
+                if task['task_text'] != 'service_task':
+                    res.append([task['id'], task['task_text'], task['completed'], folder_name, task['time_today'],
+                                task['time_all']])
+            return res
+
+    @staticmethod
+    def check_request_data(request):
+        if 'user_id' in request.data and 'folder_id' in request.data:
+            return True
+        else:
+            return False

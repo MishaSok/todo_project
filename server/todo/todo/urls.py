@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from api.views import CustomUserAPIView, RegisterUserAPIView, LoginUserAPIView, \
-    MainMenuView, TasksView, FolderView
+    MainMenuView, TasksView, FolderView, UpdateTasksView
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenVerifyView
 
 urlpatterns = [
@@ -34,6 +34,7 @@ urlpatterns = [
 
     #test
     path('api/folder', FolderView.as_view()),
+    path('api/update', UpdateTasksView.as_view()),
 
 
     # Task API

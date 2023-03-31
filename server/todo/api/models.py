@@ -27,8 +27,8 @@ class Tasks(models.Model):
     folder_name = models.CharField(unique=False, max_length=30)
     task_text = models.CharField(unique=False, max_length=100, default='None')
     created_time = models.DateTimeField(default=timezone.now)
-    time_today = models.DateTimeField(default=datetime.time(0, 0, 0))
-    time_all = models.DateTimeField(default=datetime.time(0, 0, 0))
+    time_today = models.DateTimeField(default=datetime.datetime(2000, 1, 1))
+    time_all = models.DateTimeField(default=datetime.datetime(2000, 1, 1))
     completed = models.BooleanField(default=False)
 
     def __str__(self):
