@@ -34,6 +34,7 @@ class Tasks(models.Model):
     task_text = models.CharField(max_length=150)
     time_today = models.CharField(default='00:00:00', max_length=100)
     time_all = models.CharField(default='00:00:00', max_length=100)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return [self.folder_id, self.user_id, self.task_text,  self.time_today, self.time_all]

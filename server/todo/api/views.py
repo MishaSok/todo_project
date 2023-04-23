@@ -115,7 +115,7 @@ class FolderView(APIView):
         folder = Folders(user_id=request.data['user_id'], folder_name=request.data['folder_name'],
                          can_be_deleted=True).save()
         folder_id = \
-        Folders.objects.filter(user_id=request.data['user_id'], folder_name=request.data['folder_name']).values()[0]
+            Folders.objects.filter(user_id=request.data['user_id'], folder_name=request.data['folder_name']).values()[0]
         return Response({'message': "New folder created",
                          'folderId': folder_id['id'],
                          'canBeDeleted': folder_id['can_be_deleted'],
@@ -135,3 +135,53 @@ class FolderView(APIView):
             return True
         else:
             return False
+
+
+class MainMenuView(APIView):
+    def get(self, request, pk):
+        # FOR FOLDERS
+        folders = list(Folders.objects.filter(user_id=pk).values())
+        folder_data = []
+        for folder in folders:
+            folder_data.append({
+                'folderId': folder['id'],
+                'folderName': folder['folder_name'],
+                'canBeDeleted': folder['can_be_deleted']})
+        tasks = list(Tasks.objects.filter(user_id=pk).values())
+
+        # FOR TASKS
+        if len(tasks) >= 1:
+            task_data = []
+            tasks = list(Tasks.objects.filter(user_id=pk).values())
+            for task in tasks:
+                task_data.append({
+                    'taskId': task['id'],
+                    'folderId': task['folder_id'],
+                    'userId': task['user_id'],
+                    'taskText': task['task_text'],
+                    'timeToday': task['time_today'],
+                    'timeAll': task['time_all'],
+                    'completed': task['completed']
+                })
+        else:
+            task_data = []
+        # ADD FOR TASKS LATER
+        return Response({'folders': folder_data,
+                         'tasks': task_data})
+
+
+class TaskView(APIView):
+    def post(self, request):
+        # Create New task
+        task = Tasks(user_id=request.data['user_id'], folder_id=request.data['folder_id'],
+                     task_text=request.data['task_text']).save()
+
+        # Get new task data
+        new_task_data = Tasks.objects.filter(user_id=request.data['user_id'], folder_id=request.data['folder_id'],
+                                             task_text=request.data['task_text']).values()[0]
+        return Response({'folderId': request.data['folder_id'],
+                         'taskId': new_task_data['id'],
+                         'timeToday': new_task_data['time_today'],
+                         'timeAll': new_task_data['time_all'],
+                         'completed:': new_task_data['completed'],
+                         'userId': request.data['user_id']})
