@@ -15,16 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import CustomUserAPIView, RegisterUserAPIView, LoginUserAPIView, CreateFolderView
+from api.views import CustomUserAPIView, RegisterUserAPIView, LoginUserAPIView, FolderView, MainMenuView, TaskView
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenVerifyView
 
 urlpatterns = [
+    # AUTHORIZATION API
     path('admin/', admin.site.urls),
     path('api/users_list', CustomUserAPIView.as_view()),
     path('api/register_user', RegisterUserAPIView.as_view()),
     path('api/login', LoginUserAPIView.as_view()),
+    # JSON WEB TOKEN
     path('api/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
-    path('api/folder/create', CreateFolderView.as_view())
+    # FOLDER API
+    path('api/init/<int:pk>', MainMenuView.as_view()),
+
+    #test
+    path('api/folder', FolderView.as_view()),
+    #path('api/update', UpdateTasksView.as_view()),
+
+
+    # Task API
+    path('api/tasks', TaskView.as_view())
 ]
